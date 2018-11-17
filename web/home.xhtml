@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+        <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'/>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+        <link type="text/css" rel="stylesheet" href="home_style.css"/>
+        <ui:include src="barpage.xhtml" />
+    </h:head>
+    <h:body>
+        <h:form>
+        <div class="well post-template">
+            <div class="row">
+                <div class="col-md-3">
+                    <p:graphicImage value="#{login.currentUser.profilepicture}" class="img-responsive profile-pic"/>
+                    <h3 class="name-text text-center" style="padding-right:75px;">
+                        <h:outputText value="#{login.currentUser.fname} #{login.currentUser.lname}"/>
+                    </h3>
+                </div>
+                <div class="col-md-9" style="margin-left:-40px;">
+                    <div class="form-group">
+                        <label class="label-font" >Talk to the world ...</label>
+                        <p:inputTextarea class="form-control" value="#{homeScroller.caption}" id="post" rows="4" cols="33" />
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="col-md-5">
+                                    <p:selectBooleanButton class="btn btn-primary btn-sm" value="#{homeScroller.isPublic}" rendered="true" onLabel="Public" offLabel="Private" style="margin-top:7px;"/>
+                                </div>
+                                <div class="col-md-7" style="margin-top: 7px;">
+                                   
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <h:commandLink class="btn btn-success pull-right" style="margin-top:7px;" action="#{homeScroller.submitPost()}">
+                                    Post !
+                                </h:commandLink>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </h:form>
+        <p:dataScroller value="#{homeScroller.posts}" var="home" chunkSize="10">
+            <h:form>
+                <div class="well post-template">
+                    <div class="row"> 
+                        <div class="col-md-3">
+                            <h:commandLink action="#{home.onUser()}">
+                                <p:graphicImage value="#{home.getPoster().profilepicture}" class="img-responsive profile-pic"/>
+                            </h:commandLink>
+                        </div>
+                        <div class="col-md-2" style="margin-left:-100px">
+                            <h:commandLink action="#{home.onUser()}">
+                            <h3 class="name-text">
+                                <h:outputText value="#{home.poster.fname} #{home.poster.lname}"/>
+                            </h3>
+                            </h:commandLink>
+                            <h3 class="text-muted time-text" style="margin-top:-5px;">
+                                <h:outputText value="#{home.getPost().postPK.time.toString()}"/>
+                            </h3>
+                            
+                            <h:commandLink id="img" class="btn btn-primary" style="font-size:10px;" action="#{home.onLike(home)}">
+                                <i class="fa fa-thumbs-up"></i>
+                                <span style="padding-left:5px;">Like</span>
+                            </h:commandLink>
+                            <p:overlayPanel for="img" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mousedown" dismissable="true">
+                                <p:dataScroller value="#{home.getLikers()}" var="l" chunkSize="10">
+                                    
+                                    <h:panelGrid columns="2" cellpadding="3" style="margin-bottom: 3px">
+                                        <p:graphicImage value="#{l.profilepicture}" class="img-responsive liker-pic"/>
+                                        <h:outputText class="like-text" value="#{l.fname} #{l.lname}" style="padding-left: 5px"/>
+                                    </h:panelGrid>
+
+                                </p:dataScroller>
+                            </p:overlayPanel>
+                            
+                        </div>
+                        <div class="col-md-7" style="margin-left:-20px;">
+                            <p class="post-text"> 
+                                <h:outputText value="#{home.post.caption}"/> 
+                            </p>
+                        </div>
+                    </div>
+                </div> 
+            </h:form>
+        </p:dataScroller>
+    </h:body>
+</html>

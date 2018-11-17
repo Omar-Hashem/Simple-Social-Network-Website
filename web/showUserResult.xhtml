@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>User Search Results</title>
+        <ui:include src="barpage.xhtml" />        
+    </h:head>
+    <h:body>
+        <h:form> 
+            <p:dataScroller value="#{searchView.userResult}" var="user" chunkSize="10">
+                <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                    <p:graphicImage value="#{user.profilepicture}" style="width: 100px"/> 
+                    <p:outputPanel>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:commandLink value="#{user.fname} #{user.lname}" action ="#{searchView.setSelectedUser(user)}" />
+                            <h:outputText value="" style="font-weight: bold"/>
+
+                            <h:outputText value="Home Town: " />
+                            <h:outputText value="#{user.hometown}" style="font-weight: bold"/>
+
+                            <h:outputText value="About Me:" />
+                            <h:outputText value="#{user.aboutme}" style="font-weight: bold"/>
+                        </h:panelGrid>
+                    </p:outputPanel>
+                </h:panelGrid>
+            </p:dataScroller>
+        </h:form>
+    </h:body>
+</html>
+

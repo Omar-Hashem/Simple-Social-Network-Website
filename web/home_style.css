@@ -1,0 +1,61 @@
+.profile-pic {
+    border-color: gray;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 100%;
+    width:150px;
+}
+
+.liker-pic {
+    border-color: gray;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 100%;
+    width:20px;
+}
+
+
+.name-text{
+    font-family: Tahoma;
+    font-size: 15px;
+}
+
+.time-text{
+    font-family: monospace;
+    font-size: 10px;
+}
+
+.post-text{
+    font-family: Tahoma;
+    font-size: 20px;
+    height:145px;
+    padding-left: 20px;
+    border-left: 1px solid #d6d6c2;
+}
+
+.post-template{
+    margin: 20px 20px 20px 20px; 
+    border-radius:25px; 
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.1);
+}
+
+.liker-template{
+    margin: 20px 20px 20px 20px; 
+}
+
+.label-font {
+    font-family: 'Indie Flower', cursive;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.like-text{
+    font-family: Tahoma;
+    font-size: 10px;
+}
+
+#post{
+    font-family: 'Indie Flower', cursive;
+    font-size: 20px;
+    font-weight: lighter; 
+}

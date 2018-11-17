@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" type="text/css" href="background style.css"></link>
+        <ui:include src="barpage.xhtml" />
+    </h:head>
+    <div id="header">
+        <h:body >
+            <h:form id="form">
+                <p:remoteCommand action="#{login.checkSession()}" />
+                <p:panel id="panel" header="login" style="width:400px">
+
+                    <p:messages id="msgs" closable="true" />
+
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <p:outputLabel for="firstname" value="username:" style="color: black ; font-size: x-large ; "  />
+                        <p:inputText   id="firstname" value="#{login.email}"  required="true" label="Firstname">
+                        </p:inputText>
+                        <p:message for="firstname" display="icon" />
+
+                        <p:outputLabel for="lastname" value="password:" style="color: black ; font-size: x-large ; " />
+                        <p:password id="lastname" value="#{login.password}" label="Lastname" required="true">
+                        </p:password>
+                        <p:message for="lastname"  display="icon" />
+
+                    </h:panelGrid>
+
+                    <p:commandButton value="login" update="panel"  icon="ui-icon-check" action="#{login.onSubmit()}"/>
+
+                </p:panel>
+            </h:form>
+            
+
+
+
+
+
+
+
+            <h:form>
+
+                <p:panel id="matchGrid" header="Or Sign Up" > 
+                    <p:messages id="messages" showDetail="true"  closable="true" />
+
+                    <h:panelGrid columns="3" id="dd" cellpadding="8">  
+                        <h:outputLabel  value="First Name: *" />
+                        <p:inputText id="fname" label="First Name" value="#{signUp.fName}" required = "true" />
+                        <p:message for="fname"  display="icon" />
+
+
+                        <h:outputLabel  value="Last Name: *" />
+                        <p:inputText  id="lname" label="Last Name" value="#{signUp.lName}" required = "true" />
+                        <p:message for="lname"  display="icon" />
+
+
+                        <h:outputLabel  value="Email: *" />
+                        <p:inputText  id="email"  label="Email"  value="#{signUp.email}" required = "true" >
+                        </p:inputText>
+                        <p:message for="email"  display="icon" />
+
+
+                        <h:outputLabel   value="Phone Number: *" />
+                        <p:inputText id ="phonenumber" label="Phone Numebr" value="#{signUp.phoneNumber}" required = "false" >
+                        </p:inputText>
+                        <p:message for="phonenumber"  display="icon" />
+
+
+
+                        <h:outputLabel for="pwd1" value="Password 1: *" />
+                        <p:password id="pwd1" value="#{signUp.password}" match="pwd2" label="Password 1" required="true" feedback="true" />
+                        <p:message for="pwd1"  display="icon" />
+
+
+                        <h:outputLabel for="pwd2" value="Password 2: *" />
+                        <p:password id="pwd2" value="#{signUp.password}" label="Password 2" required="true" />
+                        <p:message for="pwd2"  display="icon" />
+
+                        <p:outputLabel value="Gender:" for="gender" />
+                        <p:selectOneRadio id="gender" label="Gender"  required="true" value="#{signUp.gender}">
+                            <f:selectItem itemLabel="Male" itemValue="male" />
+                            <f:selectItem itemLabel="Female" itemValue="female" />
+                        </p:selectOneRadio>
+                        <h:outputText/>
+                        
+                        <p:outputLabel for="popup" value="Birth Date: "  />
+                        <p:calendar id="popup" value="#{signUp.birthDate}"   required ="true" />
+                        <p:message for="popup"  display="icon" />
+
+
+                        <h:outputLabel   value="Home Town " />
+                        <p:inputText id ="hometown" label="Home Town" value="#{signUp.homeTown}" required = "false" >
+                        </p:inputText>
+                        <p:message for="hometown"  display="icon" />
+
+
+                    </h:panelGrid>
+
+                    <p:commandButton update="matchGrid" value="Create Account" action="#{signUp.creatAccount()}" />
+                </p:panel>
+            </h:form>
+        </h:body>
+    </div>
+</html>
+

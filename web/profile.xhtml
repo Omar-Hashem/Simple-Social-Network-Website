@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+       
+        <style>
+            .profile-pic {
+                border-color: gray;
+                border-width: 2px;
+                border-style: solid;
+                border-radius: 100%;
+                width:150px;
+            }
+
+            .liker-pic {
+                border-color: gray;
+                border-width: 1px;
+                border-style: solid;
+                border-radius: 100%;
+                width:20px;
+            }
+
+
+            .name-text{
+                font-family: Tahoma;
+                font-size: 15px;
+            }
+
+            .time-text{
+                font-family: monospace;
+                font-size: 10px;
+            }
+
+            .post-text{
+                font-family: Tahoma;
+                font-size: 20px;
+                height:145px;
+                padding-left: 20px;
+                border-left: 1px solid #d6d6c2;
+            }
+
+            .post-template{
+                margin: 20px 20px 20px 20px; 
+                border-radius:25px; 
+                box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.1);
+            }
+
+            .main-profile-pic {
+                border-color: gray;
+                border-width: 2px;
+                border-style: solid;
+                border-radius: 100%;
+                width:150px;
+            }
+
+            .first-percent {
+                width: 10%;
+            }
+
+            .second-percent {
+                width: 15%;
+            }
+            .third-percent {
+                width: 55%;
+            }
+            .forth-percent {
+                width: 20%;
+            }
+
+            .top-alignment {
+                vertical-align: top;
+            }
+            .center-alignment{
+                vertical-align: middle;
+            }
+            .disabled {
+                pointer-events: none;
+                cursor: default;
+                color: gray;
+            }
+            .liker-template{
+                margin: 20px 20px 20px 20px; 
+            }
+
+            .label-font {
+                font-family: 'Indie Flower', cursive;
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+            .like-text{
+                font-family: Tahoma;
+                font-size: 10px;
+            }
+
+            #post{
+                font-family: 'Indie Flower', cursive;
+                font-size: 20px;
+                font-weight: lighter; 
+            }
+        </style>
+
+        
+    </h:head>
+    <h:body>
+                        <ui:include src="barpage.xhtml" />
+
+        <p:growl id="msgs" showDetail="true" />
+
+        <p:panel id="info" header="Info."  style="margin-bottom:20px">
+            <h:panelGrid columns="4"  style="width:100%;display:block" cellpadding="0" cellspacing="0" columnClasses="first-percent top-alignment , second-percent top-alignment, third-perecent top-alignment, forth-perecent top-alignment">
+
+                <h:form enctype="multipart/form-data">
+                    <h:outputText style = "font-size:20px;font-weight:bold" value="#{profileViewer.selected.getFname()} #{profileViewer.selected.getLname()}"/>
+
+                    <br/><br/><br/><br/>
+                    
+                    <p:fileUpload allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="100000" value="#{profileViewer.file}" mode="simple" style ="vertical-align: bottom;" rendered="#{profileViewer.update()}" />
+                    <p:commandButton id ="btntbn" style ="vertical-align:bottom" value="Change profile pic." ajax="false" rendered="#{profileViewer.update()}" actionListener="#{profileViewer.upload}" />
+                </h:form>
+                <p:graphicImage value=" #{friendsListScroller.getGraphic(profileViewer.selected.getProfilepicture(), profileViewer.selected.getGender())}" class="img-responsive main-profile-pic"/>
+                <p:outputPanel>
+                    Birthday: #{profileViewer.selected.birthdate}<br/>
+                    #{profileViewer.selected.gender}<br/>
+                    <h:outputText id = "t1" rendered="#{profileViewer.selected.maritalstatus!=null}" value = "#{profileViewer.selected.maritalstatus} ❤"/> <h:panelGroup rendered="#{profileViewer.selected.maritalstatus!=null}"><br /></h:panelGroup>
+                    <h:outputText id = "t2" rendered="#{profileViewer.selected.hometown!=null}" value = "From #{profileViewer.selected.hometown}"/><h:panelGroup rendered="#{profileViewer.selected.hometown!=null}"><br /></h:panelGroup>
+                    <h:outputText id = "t3" rendered="#{profileViewer.selected.aboutme!=null}" value = "About me: #{profileViewer.selected.aboutme}"/><h:panelGroup rendered="#{profileViewer.selected.aboutme!=null}"><br /></h:panelGroup>
+                    <h:outputText id = "t4" rendered="#{profileViewer.selected.phonenumber!=null}" value = "Phone Number: #{profileViewer.selected.phonenumber}"/><h:panelGroup rendered="#{profileViewer.selected.phonenumber!=null}"><br /></h:panelGroup>
+
+                    <h:form id="level2form">
+                        <p:growl id="growl" showDetail="true" sticky="true"/>
+                        <p:commandButton id="level2button" value="Update Info." icon="ui-icon-extlink" actionListener="#{profileViewer.openUpdate}" action = "profile?faces-redirect=true" rendered="#{profileViewer.update()}">
+                            <p:ajax event="dialogReturn" listener="#{profileViewer.onReturnUpdate}" update="growl :t1 :t2 :t3 :t4" />
+                        </p:commandButton>
+                    </h:form>
+                </p:outputPanel>
+                <h:form>
+                    <p:commandButton value = "Show #{profileViewer.getFriendsButtonName()} friends" action = "#{profileViewer.gotoFriends()}"/><br/><br/>
+                    <p:commandButton id = "addf" value = "Add #{profileViewer.selected.fname} as a friend" rendered="#{profileViewer.addFriendCond()}" action="#{profileViewer.addFriend}" update="addf"/><br/>
+                </h:form>
+
+            </h:panelGrid>
+        </p:panel>
+        <p:sticky target="info" />
+        <p:dataScroller value="#{profileViewer.pl}" var="p" chunkSize="10">
+            <h:form>
+                <div class="well post-template">
+                    <div class="row"> 
+                        <div class="col-md-3">
+                            <p:graphicImage value="#{friendsListScroller.getGraphic(p.user.profilepicture, p.user.gender)}" class="img-responsive profile-pic"/>
+                        </div>
+                        <div class="col-md-2" style="margin-left:-100px">
+
+                            <h3 class="name-text">
+                                <h:outputText value="#{p.user.fname} #{p.user.lname}"/>
+                            </h3>
+
+                            <h3 class="text-muted time-text" style="margin-top:-5px;">
+                                <h:outputText value="#{p.getPostPK().getTime().toString()}"/>
+                            </h3>
+
+                            <h:commandLink id="img" class="btn btn-primary" style="font-size:10px;" action="#{home.onLike(p)}">
+                                <i class="fa fa-thumbs-up"></i>
+                                <span style="padding-left:5px;">Like</span>
+                            </h:commandLink>
+                            <p:overlayPanel for="img" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mousedown" dismissable="true">
+                                <p:dataScroller value="#{p.userCollection}" var="l" chunkSize="10">
+
+                                    <h:panelGrid columns="2" cellpadding="3" style="margin-bottom: 3px">
+                                        <p:graphicImage value="#{friendsListScroller.getGraphic(l.getProfilepicture(), l.getGender())}" class="img-responsive liker-pic"/>
+                                        <h:outputText class="like-text" value="#{l.fname} #{l.lname}" style="padding-left: 5px"/>
+                                    </h:panelGrid>
+
+                                </p:dataScroller>
+                            </p:overlayPanel>
+
+                        </div>
+                        <div class="col-md-7" style="margin-left:-20px;">
+                            <p class="post-text"> 
+                                <h:outputText value="#{p.caption}"/> 
+                            </p>
+                        </div>
+                    </div>
+                </div> 
+            </h:form>
+        </p:dataScroller>
+    </h:body>
+</html>
+

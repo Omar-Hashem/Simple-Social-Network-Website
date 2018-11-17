@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+        <style>
+            .profile-pic {
+                border-color: gray;
+                border-width: 2px;
+                border-style: solid;
+                border-radius: 100%;
+                width:150px;
+            }
+            
+            .main-profile-pic {
+                border-color: gray;
+                border-width: 2px;
+                border-style: solid;
+                border-radius: 100%;
+                width:200px;
+            }
+
+            .name-text{
+                font-family: Tahoma;
+                font-size: 15px;
+            }
+
+            .time-text{
+                font-family: monospace;
+                font-size: 10px;
+            }
+
+            .post-text{
+                font-family: Tahoma;
+                font-size: 20px;
+                height:145px;
+                padding-left: 20px;
+                border-left: 1px solid #d6d6c2;
+            }
+
+            .post-template{
+                margin: 20px 100px 20px 100px; 
+                border-radius:25px; 
+                box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.1);
+            }
+            .forty-percent {
+                width: 15%;
+            }
+
+            .sixty-percent {
+                 width: 85%;
+            }
+
+            .top-alignment {
+                 vertical-align: top;
+            }
+            .center-alignment{
+                vertical-align: middle;
+            }
+        </style>
+        <title>your friends</title>
+    </h:head>
+    <h:body>
+        <ui:include src="barpage.xhtml" />
+        <p:dataScroller id ="friendscroller" value="#{friendsListScroller.maintainFriends()}" var="friend" chunkSize="5">
+        <f:facet name="header">
+            Friends List
+        </f:facet>
+ 
+        <h:panelGrid columns="2" style="width:100%" columnClasses="forty-percent top-alignment, sixty-percent center-alignment">
+            
+            <p:graphicImage value="#{friendsListScroller.getGraphic(friend.getProfilepicture(),friend.getGender())}" class="img-responsive profile-pic" /> 
+            
+            <p:outputPanel>
+                <h:form>
+                    <p:commandLink style="color:blue;font-size:18px;font-weight:bold" id="myfriend" action="#{friendsListScroller.linkAction(friend)}" ajax="false" value="#{friend.getFname()} #{friend.getLname()}"/>
+                </h:form>
+            </p:outputPanel>
+           
+        </h:panelGrid>
+    </p:dataScroller>
+    </h:body>
+</html>
+

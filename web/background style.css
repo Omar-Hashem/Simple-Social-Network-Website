@@ -1,0 +1,27 @@
+
+*{
+    margin: 0;
+    padding: 0;
+}
+body { 
+
+-moz-background-size: cover;
+
+-webkit-background-size: cover;
+
+-o-background-size: cover;
+
+background-size: 34%;
+
+} 
+.ui-panel {
+   
+  
+   alignment-adjust: central; 
+    width: 50%;
+    background : transparent;
+    opacity:0.9;   
+    margin:auto; 
+    width:800px;
+    margin-top: 10%;
+}
